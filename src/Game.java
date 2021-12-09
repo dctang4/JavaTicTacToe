@@ -11,6 +11,7 @@ public class Game implements ActionListener{
 	JPanel buttonPanel = new JPanel();
 	JLabel textfield = new JLabel();
 	JButton[] buttons = new JButton[9];
+	JButton resetButton = new JButton("RESET"); 
 	boolean player1Turn;
 	
 	Game() {
@@ -22,9 +23,19 @@ public class Game implements ActionListener{
 		textfield.setText("Tic-Tac-Toe");
 		textfield.setOpaque(true);
 		
+		resetButton.setBounds(10,10, 100, 25);
+		resetButton.setFont(new Font("Ink Free", Font.ITALIC, 20));
+		resetButton.setFocusable(false);
+		resetButton.addActionListener(e -> {
+			reset();
+		});
+		resetButton.setVisible(false);
+		
 		titlePanel.setLayout(new BorderLayout());
 		titlePanel.setBounds(0,0, 800, 100);
+		titlePanel.add(resetButton);
 		titlePanel.add(textfield);
+		
 		
 		buttonPanel.setLayout(new GridLayout(3,3));
 		buttonPanel.setBackground(new Color(150,150,150));
@@ -36,6 +47,7 @@ public class Game implements ActionListener{
 			buttons[i].setFont(new Font("MV Boli", Font.ITALIC, 120));
 			buttons[i].setFocusable(false);
 			buttons[i].addActionListener(this);
+			buttons[i].setEnabled(false);
 			
 		}
 		
@@ -47,15 +59,18 @@ public class Game implements ActionListener{
 		frame.add(titlePanel, BorderLayout.NORTH);
 		frame.add(buttonPanel);
 		
-		firstTurn();
+		firstTurn(1000);
 		
 	}
 	
-	public void firstTurn() {
+	public void firstTurn(int delay) {
 		
 		// add a delay
 		try {
-			Thread.sleep(2000);
+			Thread.sleep(delay);
+			for(int i = 0; i < 9; i++) {
+				buttons[i].setEnabled(true);
+			}
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -253,6 +268,7 @@ public class Game implements ActionListener{
 		}
 		
 		textfield.setText("X Wins");
+		resetButton.setVisible(true);
 		
 	}
 	
@@ -267,10 +283,20 @@ public class Game implements ActionListener{
 		}
 		
 		textfield.setText("O Wins");
-		
+		resetButton.setVisible(true);
 		
 	}
 
-
+	public void reset() {
+		
+		resetButton.setVisible(false);
+		
+		for(int i = 0; i < 9; i++) {
+			buttons[i].setText("");
+			buttons[i].setBackground(new JButton().getBackground());
+		}
+		
+		firstTurn(100);
+	}
 	
 }
