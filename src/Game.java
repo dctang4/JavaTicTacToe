@@ -25,6 +25,8 @@ public class Game implements ActionListener{
 		
 		resetButton.setBounds(10,10, 100, 25);
 		resetButton.setFont(new Font("Ink Free", Font.ITALIC, 20));
+		resetButton.setBackground(Color.black);
+		resetButton.setForeground(Color.white);
 		resetButton.setFocusable(false);
 		resetButton.addActionListener(e -> {
 			reset();
